@@ -13,6 +13,8 @@ router.use(
   serveStatic(UPLOAD_PATH, {
     etag: false,
     lastModified: false,
+    cacheControl: true,
+    maxAge: '86400000',
   }),
 );
 
@@ -20,6 +22,9 @@ router.use(
   serveStatic(PUBLIC_PATH, {
     etag: false,
     lastModified: false,
+    maxAge: '86400000',
+    cacheControl: true,
+    acceptRanges: "gzip"
   }),
 );
 
@@ -27,6 +32,8 @@ router.use(
   serveStatic(CLIENT_DIST_PATH, {
     etag: false,
     lastModified: false,
+    cacheControl: true,
+    maxAge: '86400000',
   }),
 );
 

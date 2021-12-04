@@ -25,6 +25,7 @@ async function fetchJSON(url) {
     async: false,
     dataType: 'json',
     method: 'GET',
+    accepts: 'gzip',
     url,
   });
   return result;
