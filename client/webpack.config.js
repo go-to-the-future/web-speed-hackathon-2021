@@ -4,6 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 
 const webpack = require('webpack');
 const { truncate } = require('lodash');
@@ -26,14 +27,12 @@ const config = {
   },
   devtool: 'inline-source-map',
   entry: {
-    main: [
-      'core-js',
-      'regenerator-runtime/runtime',
-      'jquery-binarytransport',
-      path.resolve(SRC_PATH, './index.css'),
-      path.resolve(SRC_PATH, './buildinfo.js'),
-      path.resolve(SRC_PATH, './index.jsx'),
-    ],
+    bundle_core:  'core-js',
+    bundle_regenerator:  'regenerator-runtime/runtime',
+    bundle_jquery:  'jquery-binarytransport',
+    bundle_css:  path.resolve(SRC_PATH, './index.css'),
+    bundle_build_info:  path.resolve(SRC_PATH, './buildinfo.js'),
+    bundle_jsx:  path.resolve(SRC_PATH, './index.jsx'),
   },
   mode: 'none',
   module: {
@@ -77,6 +76,7 @@ const config = {
       inject: false,
       template: path.resolve(SRC_PATH, './index.html'),
     }),
+    new RemoveEmptyScriptsPlugin(),
   ],
   optimization: {
     minimize: true,
