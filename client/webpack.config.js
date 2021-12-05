@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const webpack = require('webpack');
+const { truncate } = require('lodash');
 
 const SRC_PATH = path.resolve(__dirname, './src');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
@@ -78,6 +79,7 @@ const config = {
     }),
   ],
   optimization: {
+    minimize: true,
     minimizer: [
       new TerserPlugin(),
       new OptimizeCSSAssetsPlugin()
