@@ -74,7 +74,7 @@ const config = {
       filename: 'styles/[name].css',
     }),
     new HtmlWebpackPlugin({
-      inject: 'false',
+      inject: false,
       template: path.resolve(SRC_PATH, './index.html')
     }),
     new RemoveEmptyScriptsPlugin(),
