@@ -1,7 +1,10 @@
 const path = require('path');
 
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 const webpack = require('webpack');
 
 const SRC_PATH = path.resolve(__dirname, './src');
@@ -64,7 +67,7 @@ const config = {
       BUILD_DATE: new Date().toISOString(),
       // Heroku では SOURCE_VERSION 環境変数から commit hash を参照できます
       COMMIT_HASH: process.env.SOURCE_VERSION || '',
-      NODE_ENV: 'development',
+      NODE_ENV: 'production',
     }),
     new MiniCssExtractPlugin({
       filename: 'styles/[name].css',
@@ -74,6 +77,12 @@ const config = {
       template: path.resolve(SRC_PATH, './index.html'),
     }),
   ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin(),
+      new OptimizeCSSAssetsPlugin()
+    ]
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
     fallback: {
