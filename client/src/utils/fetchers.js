@@ -8,21 +8,14 @@ import { ajax }  from 'jquery'
  * @returns {Promise<ArrayBuffer>}
  */
 async function fetchBinary(url) {
-  const req = new XMLHttpRequest()
-  req.responseType = 'arraybuffer'
-  req.open('get', url, true);
-  req.send()
-  req.onload = function () {
-    return req.response
-  }
-  // const result = await ajax({
-  //   async: true,
-  //   dataType: 'binary',
-  //   method: 'GET',
-  //   responseType: 'arraybuffer',
-  //   url,
-  // });
-  // return result;
+  const result = await ajax({
+    async: true,
+    dataType: 'binary',
+    method: 'GET',
+    responseType: 'arraybuffer',
+    url,
+  });
+  return result;
 }
 
 /**
