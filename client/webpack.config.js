@@ -75,8 +75,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       inject: 'body',
-      template: path.resolve(SRC_PATH, './index.html'),
-      chuncks: ['main.js']
+      template: path.resolve(SRC_PATH, './index.html')
     }),
     new RemoveEmptyScriptsPlugin(),
   ],
