@@ -3,7 +3,7 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 const webpack = require('webpack');
 const { truncate } = require('lodash');
@@ -82,7 +82,7 @@ const config = {
     minimize: true,
     minimizer: [
       new TerserPlugin(),
-      new OptimizeCSSAssetsPlugin()
+      new CssMinimizerPlugin()
     ]
   },
   resolve: {
