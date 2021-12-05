@@ -73,8 +73,10 @@ const config = {
       filename: 'styles/[name].css',
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: 'body',
       template: path.resolve(SRC_PATH, './index.html'),
+      chuncks: ['bundle_jsx', 'bundle_jquery', 'bundle_core', 'bundle_regenerator'
+    ]
     }),
     new RemoveEmptyScriptsPlugin(),
   ],
