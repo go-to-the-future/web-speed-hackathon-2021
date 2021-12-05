@@ -19,7 +19,7 @@ async function calculate(data) {
   const rightData = _.map(buffer.getChannelData(1), Math.abs);
 
   // 左右の音声データの平均を取る
-  const normalized = _.map(zip(leftData, rightData), _.mean);
+  const normalized = _.map(_.zip(leftData, rightData), _.mean);
   // 100 個の chunk に分ける
   const chunks = _.chunk(normalized, Math.ceil(normalized.length / 100));
   // chunk ごとに平均を取る
