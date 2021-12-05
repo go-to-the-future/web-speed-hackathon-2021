@@ -7,7 +7,6 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 
 const webpack = require('webpack');
-const { truncate } = require('lodash');
 
 const SRC_PATH = path.resolve(__dirname, './src');
 const PUBLIC_PATH = path.resolve(__dirname, '../public');
@@ -25,16 +24,18 @@ const config = {
     },
     static: [PUBLIC_PATH, UPLOAD_PATH],
   },
-  devtool: 'inline-source-map',
+  devtool: process.env.NODE_ENV === 'development' ? 'inline-source-map' : 'nosources-source-map',
   entry: {
-    bundle_core:  'core-js',
-    bundle_regenerator:  'regenerator-runtime/runtime',
-    bundle_jquery:  'jquery-binarytransport',
-    bundle_css:  path.resolve(SRC_PATH, './index.css'),
-    bundle_build_info:  path.resolve(SRC_PATH, './buildinfo.js'),
-    bundle_jsx:  path.resolve(SRC_PATH, './index.jsx'),
+    main: [
+      'core-js',
+      'regenerator-runtime/runtime',
+      'jquery-binarytransport',
+      path.resolve(SRC_PATH, './index.css'),
+      path.resolve(SRC_PATH, './buildinfo.js'),
+      path.resolve(SRC_PATH, './index.jsx'),
+    ],
   },
-  mode: 'none',
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
@@ -46,7 +47,7 @@ const config = {
         test: /\.css$/i,
         use: [
           { loader: MiniCssExtractPlugin.loader },
-          { loader: 'css-loader', options: { url: false } },
+          { loader: 'css-loader', options: { url: false, sourceMap: process.env.NODE_ENV === 'development',} },
           { loader: 'postcss-loader' },
         ],
       },
@@ -75,15 +76,22 @@ const config = {
     new HtmlWebpackPlugin({
       inject: 'body',
       template: path.resolve(SRC_PATH, './index.html'),
-      chuncks: ['bundle_jsx', 'bundle_jquery', 'bundle_core', 'bundle_regenerator'
-    ]
+      chuncks: ['main.js']
     }),
     new RemoveEmptyScriptsPlugin(),
   ],
   optimization: {
-    minimize: true,
+    minimize: process.env.NODE_ENV !== 'development',
     minimizer: [
-      new TerserPlugin(),
+      new TerserPlugin({
+        terserOptions: {
+          ecma: 6,
+          compress: process.env.NODE_ENV !== 'development',
+          output: {
+            comments: process.env.NODE_ENV === 'development',
+          }
+        }
+      }),
       new CssMinimizerPlugin()
     ]
   },
