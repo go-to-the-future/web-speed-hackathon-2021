@@ -1,5 +1,4 @@
-import dayjs from 'dayjs';
-import ja from 'dayjs/locale/ja';
+import moment from 'moment';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -71,8 +70,8 @@ const TimelineItem = ({ post }) => {
             </Link>
             <span className="pr-1 text-gray-500">-</span>
             <Link className="pr-1 text-gray-500 hover:underline" to={`/posts/${post.id}`}>
-              <time dateTime={dayjs(post.createdAt).toISOString()}>
-                {dayjs(post.createdAt).locale(ja).format('YYYY年MM月DD日')}
+              <time dateTime={moment(post.createdAt).toISOString()}>
+                {moment(post.createdAt).locale('ja').format('LL')}
               </time>
             </Link>
           </p>

@@ -1,5 +1,4 @@
-import dayjs from 'dayjs';
-import ja from 'dayjs/locale/ja';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -34,8 +33,8 @@ const CommentItem = ({ comment }) => {
           </p>
           <p className="text-gray-800 text-sm leading-relaxed">{comment.text}</p>
           <p className="text-gray-500 text-xs">
-            <time dateTime={dayjs(comment.createdAt).toISOString()}>
-              {dayjs(comment.createdAt).locale(ja).format('YYYY年MM月DD日')}
+            <time dateTime={moment(comment.createdAt).toISOString()}>
+              {moment(comment.createdAt).locale('ja').format('LL')}
             </time>
           </p>
         </div>
