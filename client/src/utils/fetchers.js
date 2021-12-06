@@ -1,3 +1,4 @@
+import { isNull } from 'lodash';
 import { gzip } from 'pako';
 
 /**
@@ -21,26 +22,12 @@ async function fetchBinary(url) {
  * @returns {Promise<T>}
  */
 async function fetchJSON(url) {
-  // const request = new XMLHttpRequest();
-  // request.responseType = 'json'
-  // request.open('GET', url, true, null, null);
-  // request.send();
-
-  // request.addEventListener("load", function(){ // loadイベントを登録します。
-  //   console.log(this);
-  //   console.log('-----------------------------');
-  //   console.log(this.response);
-  //   return this.response;
-  // }, false);
-
   const result = await $.ajax({
     async: true,
     dataType: 'json',
     method: 'GET',
-    url,
+    url
   });
-  console.log('==============================')
-  console.log(result);
   return result;
 }
 
