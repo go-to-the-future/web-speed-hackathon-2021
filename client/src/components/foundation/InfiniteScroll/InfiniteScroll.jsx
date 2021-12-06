@@ -12,7 +12,6 @@ import { useInView } from 'react-intersection-observer';
 const InfiniteScroll = ({ children, fetchMore, items }) => {
   const { ref, inView } = useInView();
   const latestItem = items[items.length - 1];
-  const [count, setCount] = React.useState(0);
 
   const prevReachedRef = React.useRef(false);
 
@@ -22,8 +21,7 @@ const InfiniteScroll = ({ children, fetchMore, items }) => {
     }
     // アイテムがないときは追加で読み込まない
     if (latestItem !== undefined) {
-      setCount(count + 1);
-      fetchMore(count);
+      fetchMore();
     }
     prevReachedRef.current = latestItem;
   }, [latestItem, inView]);
