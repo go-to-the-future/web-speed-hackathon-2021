@@ -26,7 +26,7 @@ export function useInfiniteFetch(apiPath, fetcher) {
     isLoading: true,
   });
 
-  const fetchMore = React.useCallback(() => {
+  const fetchMore = React.useCallback((count) => {
     const { isLoading, offset } = internalRef.current;
     if (isLoading) {
       return;
@@ -40,8 +40,9 @@ export function useInfiniteFetch(apiPath, fetcher) {
       isLoading: true,
       offset,
     };
+    console.log(count);
 
-    const promise = fetcher(`${apiPath}?offset=${offset}&limit=10`);
+    const promise = fetcher(`${apiPath}?offset=${count? count*5 : 0}&limit=5`);
 
     promise.then((allData) => {
       setResult((cur) => ({
